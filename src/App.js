@@ -1,24 +1,27 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import logo from "./logo.svg";
+import "./App.css";
+import AuthPage from "./pages/AuthPage";
+import HomePage from "./pages/HomePage";
+import { UserProvider, UserContext } from "./contexts/UserContext";
+import Header from "./components/Header";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <UserProvider>
+      <div className="App">
+        <div className="App-container">
+          <Header />
+          <UserContext.Consumer>
+            {userContext => (
+              <div className="content">
+                {userContext.currentUser ? <HomePage /> : <AuthPage />}
+              </div>
+            )}
+          </UserContext.Consumer>
+        </div>
+      </div>
+    </UserProvider>
   );
 }
 
